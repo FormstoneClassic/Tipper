@@ -1,0 +1,27 @@
+/*
+ * Tipper Plugin [Formstone Library]
+ * @author Ben Plum
+ * @version 0.4
+ *
+ * Copyright © 2012 Ben Plum <mr@benplum.com>
+ * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
+ */
+ 
+	.tipper-positioner { left: -99999px; position: absolute; pointer-events: none; top: -99999px; }
+	.tipper-positioner .tipper-wrapper { position: relative; }
+	.tipper-positioner .tipper-content { background: rgba(0, 0, 0, 0.85); border-radius: 3px; color: #fff; display: block; font-family: sans-serif; font-size: 12px; margin: 0; padding: 8px 12px; white-space: nowrap; }
+	.tipper-positioner .tipper-caret { background: url(fs-tipper-icons.png) no-repeat; display: block; height: 11px; margin: 0; overflow: hidden; position: absolute; width: 5px; }
+	
+	.tipper-positioner.right { box-shadow: 1px 0 3px rgba(0, 0, 0, 0.25); }
+	.tipper-positioner.right .tipper-caret { background-position: left center; left: -5px; top: 0; }
+	
+	.tipper-positioner.left { box-shadow: -1px 0 3px rgba(0, 0, 0, 0.25); }
+	.tipper-positioner.left .tipper-caret { background-position: right center; right: -5px; top: 0; }
+	
+	.tipper-positioner.vertical .tipper-caret { display: block; float: none; height: 5px; margin: 0 auto; width: 11px; }
+	
+	.tipper-positioner.top { box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.25); }
+	.tipper-positioner.top .tipper-caret { background-position: center bottom; bottom: -5px; left: 0; }
+	
+	.tipper-positioner.bottom { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); }
+	.tipper-positioner.bottom .tipper-caret { background-position: center top; top: -5px; left: 0; }
