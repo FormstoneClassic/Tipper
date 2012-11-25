@@ -1,7 +1,7 @@
 /*
  * Tipper Plugin [Formstone Library]
  * @author Ben Plum
- * @version 0.4
+ * @version 0.4.1
  *
  * Copyright © 2012 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -25,6 +25,7 @@ if (jQuery) (function($) {
 		},
 		
 		destroy: function() {
+			$(".tipper-wrapper").remove();
 			return $(this).off(".tipper")
 					  	  .data("tipper", null);
 		}
