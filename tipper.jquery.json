@@ -1,0 +1,27 @@
+{
+	"name": "tipper",
+	"title": "Tipper",
+	"description": "A jQuery plugin for attaching custom tooltips to elements. Part of the formstone library.",
+	"keywords": [
+		"tooltip",
+		"ui",
+		"formstone"
+	],
+	"version": "0.4.1",
+	"author": {
+		"name": "Ben Plum",
+		"url": "http://www.benplum.com"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://www.opensource.org/licenses/mit-license.php"
+		}
+	],
+	"docs": "http://www.benplum.com/formstone/tipper/",
+	"download": "https://github.com/benplum/Tipper",
+	"bugs": "https://github.com/benplum/Boxer/Tipper",
+	"dependencies": {
+		"jquery": ">=1.7"
+	}
+}
