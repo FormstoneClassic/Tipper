@@ -5,9 +5,10 @@
 	"keywords": [
 		"tooltip",
 		"ui",
-		"formstone"
+		"formstone",
+		"benplum"
 	],
-	"version": "0.4.1",
+	"version": "0.4.2",
 	"author": {
 		"name": "Ben Plum",
 		"url": "http://www.benplum.com"
