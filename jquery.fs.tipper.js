@@ -1,7 +1,7 @@
 /*
  * Tipper Plugin [Formstone Library]
  * @author Ben Plum
- * @version 0.4.2
+ * @version 0.4.3
  *
  * Copyright © 2012 Ben Plum <mr@benplum.com>
  * Released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
@@ -38,31 +38,31 @@ if (jQuery) (function($) {
 	}
 	
 	function _build(e) {
-		var $target = $(this);
-		var data = $target.data("tipper");
+		var $target = $(this),
+			data = $target.data("tipper");
+		
 		var html = '<div class="tipper-wrapper"><div class="tipper-content">';
 		html += data.formatter.apply($("body"), [$target]);
 		html += '</div><span class="tipper-caret"></span></div>';
 		
 		$target.data("tipper-text", $target.attr("title")).attr("title", null);
 		
-		var $tipper = $('<div class="tipper-positioner" />');
-		$tipper.append(html).appendTo("body");
+		var $tipper = $('<div class="tipper-positioner ' + data.direction + '" />');
+		$tipper.append(html)
+			   .appendTo("body");
 		
-		var $caret = $tipper.find(".tipper-caret");
-		var offset = $target.offset();
-		var targetWidth = $target.outerWidth();
-		var targetHeight = $target.outerHeight();
-		var tipperWidth = $tipper.outerWidth(true);
-		var tipperHeight = $tipper.outerHeight(true);
-		
-		var classes = data.direction;
-		var tipperPos = {};
-		var caretPos = {};
+		var $caret = $tipper.find(".tipper-caret"),
+			offset = $target.offset(),
+			targetWidth = $target.outerWidth(),
+			targetHeight = $target.outerHeight(),
+			tipperWidth = $tipper.outerWidth(true),
+			tipperHeight = $tipper.outerHeight(true),
+			tipperPos = {},
+			caretPos = {};
 		
 		if (data.direction == "right" || data.direction == "left") {
 			tipperPos.top = offset.top - ((tipperHeight - targetHeight) / 2);
-			caretPos.top = (tipperHeight - $caret.outerHeight()) / 2;
+			caretPos.top = (tipperHeight - $caret.outerHeight(true)) / 2;
 			
 			if (data.direction == "right") {
 				tipperPos.left = offset.left + targetWidth + data.margin;
@@ -70,9 +70,8 @@ if (jQuery) (function($) {
 				tipperPos.left = offset.left - tipperWidth - data.margin;
 			}
 		} else {
-			classes += ' vertical';
 			tipperPos.left = offset.left - ((tipperWidth - targetWidth) / 2);
-			caretPos.left = (tipperWidth - $caret.outerWidth()) / 2;
+			caretPos.left = (tipperWidth - $caret.outerWidth(true)) / 2;
 			
 			if (data.direction == "bottom") {
 				tipperPos.top = offset.top + targetHeight + data.margin;
@@ -81,8 +80,7 @@ if (jQuery) (function($) {
 			}
 		}
 		
-		$tipper.css(tipperPos)
-				.addClass(classes);
+		$tipper.css(tipperPos);
 		$caret.css(caretPos);
 		
 		$target.one("mouseleave.tipper", { 
@@ -97,7 +95,8 @@ if (jQuery) (function($) {
 	
 	function _destroy(e) {
 		var data = e.data;
-		data.$target.attr("title", data.$target.data("tipper-text")).data("tipper-text", null);
+		data.$target.attr("title", data.$target.data("tipper-text"))
+					.data("tipper-text", null);
 		data.$tipper.remove();
 	}
 	
