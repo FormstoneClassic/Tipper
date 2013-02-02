@@ -20,8 +20,9 @@
 		}
 	],
 	"docs": "http://www.benplum.com/formstone/tipper/",
+	"demo": "http://www.benplum.com/formstone/tipper/",
 	"download": "https://github.com/benplum/Tipper",
-	"bugs": "https://github.com/benplum/Boxer/Tipper",
+	"bugs": "https://github.com/benplum/Tipper/issues",
 	"dependencies": {
 		"jquery": ">=1.7"
 	}
