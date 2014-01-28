@@ -1,8 +1,10 @@
-Tipper
-========
+<a href="http://gruntjs.com" target="_blank"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a> 
+# Tipper 
 
-A jQuery plugin for attaching custom tooltips to elements. Part of the formstone library.
+A jQuery plugin for simple tooltips. Part of the formstone library. 
 
-[Documentation and Examples](http://www.benplum.com/formstone/tipper/)
+- [Demo](http://formstone.it/components/Tipper/demo/index.html) 
+- [Documentation](http://formstone.it/tipper/) 
 
-Bower Support: `bower install Tipper`
+#### Bower Support 
+`bower install Tipper`

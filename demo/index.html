@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+		<title>Tipper Demo</title>
+
+		<link href="http://formstone.it/css/demo.css" rel="stylesheet" type="text/css" media="all" />
+
+		<!--[if LTE IE 8]>
+			<link href="http://formstone.it/css/demo.ie.css" rel="stylesheet" type="text/css" media="all" />
+		<![endif]-->
+
+		<script src="http://formstone.it/js/demo.js"></script>
+
+		<link href="../jquery.fs.tipper.css" rel="stylesheet" type="text/css" media="all" />
+		<script src="../jquery.fs.tipper.js"></script>
+
+		<style>
+			.tipped { background: #999; clear: both; float: none; display: block; margin: 20px auto; width: 50%; }
+			.tipped:hover { background: #777; }
+		</style>
+
+		<script>
+			$(document).ready(function() {
+				$(".tipped").tipper();
+			});
+		</script>
+	</head>
+	<body class="gridlock demo">
+		<header id="header">
+			<div class="row">
+				<div class="all-full">
+					<a href="http://formstone.it/" class="branding">Formstone</a>
+				</div>
+			</div>
+		</header>
+		<article class="row page">
+			<div class="mobile-full tablet-full desktop-8 desktop-push-2">
+				<header class="header">
+					<h1>Tipper Demo</h1>
+					<!-- <p>A technical demonstration of the jQuery plugin.</p> -->
+					<br />
+					<a href="http://formstone.it/tipper/" class="button">View Documentation</a>
+				</header>
+
+				<!-- BASIC -->
+				<h2>Basic</h2>
+				<p>Tipper will generate a tooltip based on the target element's <code>data-title</code>. It can also be configured to open in multiple directions by passing the direction at initialization:</p>
+
+				<pre class="example"><code class="language-javascript">$(".target").tipper({
+	direction: "top"
+});</code></pre>
+				<pre class="example"><code class="language-markup">&lt;a href="#" data-title="ToolTip Text"&gt;Tooltip Target&lt;/a&gt;</code></pre>
+
+				<h5>Demo</h5>
+				<div class="clear_fix">
+					<a href="#" class="button tipped" data-title="Great New Tooltip" data-tipper-options='{"direction":"left"}'>Left</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip" data-tipper-options='{"direction":"right"}'>Right</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip" data-tipper-options='{"direction":"top"}'>Top</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip" data-tipper-options='{"direction":"bottom"}'>Bottom</a>
+				</div>
+
+				<br />
+
+				<!-- FOLLOW -->
+				<h2>Follow</h2>
+				<p>You can also configure Tipper to follow the user's mouse:</p>
+
+				<pre class="example"><code class="language-javascript">$(".target").tipper({
+	follow: true
+});</code></pre>
+
+				<h5>Demo</h5>
+				<div class="clear_fix">
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"left","follow":"true"}'>Left</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"right","follow":"true"}'>Right</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"top","follow":"true"}'>Top</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"bottom","follow":"true"}'>Bottom</a>
+				</div>
+
+				<br />
+
+			</div>
+		</article>
+
+		<footer id="footer" class="row">
+			<div class="all-full copyright">
+				Made with &hearts; in Hampden
+			</div>
+		</footer>
+	</body>
+</html>

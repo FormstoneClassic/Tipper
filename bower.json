@@ -1,30 +1,21 @@
 {
-	"name": "Tipper",
-	"version": "0.1.0",
-	"description": "A jQuery plugin for attaching custom tooltips to elements. Part of the formstone library.",
-	"keywords": [
-		"javascript",
-		"jquery",
-		"tooltip",
-		"ui",
-		"formstone",
-		"benplum"
-	],
-	"authors": [
-		"Ben Plum"
-	],
-	"license": "MIT",
-	"homepage": "http://www.benplum.com/formstone/tipper/",
-	"main": [
-		"jquery.fs.tipper.css",
-		"jquery.fs.tipper.min.js",
-		"fs-tipper-icon.png"
-	],
-	"ignore": [
-		"*.json"
-	],
-	"dependencies": {
-		"jquery": ">= 1.7.0"
-	},
-	"devDependencies": {}
+  "name": "Tipper",
+  "version": "3.0.0",
+  "description": "A jQuery plugin for simple tooltips. Part of the formstone library.",
+  "author": {
+    "name": "Ben Plum",
+    "email": "mr@benplum.com",
+    "url": "http://www.benplum.com"
+  },
+  "license": "MIT",
+  "homepage": "http://formstone.it/tipper/",
+  "main": [
+    "jquery.fs.tipper.js",
+    "jquery.fs.tipper.css"
+  ],
+  "ignore": [
+    "*.jquery.json",
+    "Gruntfile.js",
+    "src/"
+  ]
 }
