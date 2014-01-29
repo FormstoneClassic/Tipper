@@ -1,5 +1,5 @@
 /* 
- * Tipper v3.0.0 - 2014-01-28 
+ * Tipper v3.0.1 - 2014-01-29 
  * A jQuery plugin for simple tooltips. Part of the formstone library. 
  * http://formstone.it/tipper/ 
  * 
@@ -47,7 +47,7 @@
 		 * @example $(".target").tipper("destroy");
 		 */
 		destroy: function() {
-			return $(this).trigger("mouseleave")
+			return $(this).trigger("mouseleave.tipper")
 						  .off(".tipper");
 		}
 	};

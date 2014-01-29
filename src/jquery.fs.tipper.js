@@ -39,7 +39,7 @@
 		 * @example $(".target").tipper("destroy");
 		 */
 		destroy: function() {
-			return $(this).trigger("mouseleave")
+			return $(this).trigger("mouseleave.tipper")
 						  .off(".tipper");
 		}
 	};
