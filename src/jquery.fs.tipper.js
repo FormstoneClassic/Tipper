@@ -40,7 +40,8 @@
 		 */
 		destroy: function() {
 			return $(this).trigger("mouseleave.tipper")
-						  .off(".tipper");
+						  .off(".tipper")
+						  .removeClass("tipper-attached");
 		}
 	};
 
@@ -53,7 +54,9 @@
 	 */
 	function _init(opts) {
 		options.formatter = _format;
-		return $(this).on("mouseenter.tipper", $.extend({}, options, opts || {}), _build);
+		return $(this).not(".tipper-attached")
+					  .addClass("tipper-attached")
+					  .on("mouseenter.tipper", $.extend({}, options, opts || {}), _build);
 	}
 
 	/**

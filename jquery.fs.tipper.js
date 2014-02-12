@@ -1,5 +1,5 @@
 /* 
- * Tipper v3.0.1 - 2014-01-29 
+ * Tipper v3.0.2 - 2014-02-12 
  * A jQuery plugin for simple tooltips. Part of the formstone library. 
  * http://formstone.it/tipper/ 
  * 
@@ -48,7 +48,8 @@
 		 */
 		destroy: function() {
 			return $(this).trigger("mouseleave.tipper")
-						  .off(".tipper");
+						  .off(".tipper")
+						  .removeClass("tipper-attached");
 		}
 	};
 
@@ -61,7 +62,9 @@
 	 */
 	function _init(opts) {
 		options.formatter = _format;
-		return $(this).on("mouseenter.tipper", $.extend({}, options, opts || {}), _build);
+		return $(this).not(".tipper-attached")
+					  .addClass("tipper-attached")
+					  .on("mouseenter.tipper", $.extend({}, options, opts || {}), _build);
 	}
 
 	/**
