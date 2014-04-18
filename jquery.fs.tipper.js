@@ -83,7 +83,7 @@
 		html += '<div class="tipper ' + data.direction + '">';
 		html += '<div class="tipper-content">';
 		html += data.formatter.apply($body, [$target]);
-		html += '<span class="tipper-caret"</span>';
+		html += '<span class="tipper-caret"></span>';
 		html += '</div>';
 		html += '</div>';
 
