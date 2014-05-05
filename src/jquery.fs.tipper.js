@@ -97,14 +97,14 @@
 		var caretHeight   = data.$caret.outerHeight(true),
 			caretWidth    = data.$caret.outerWidth(true),
 			contentHeight = data.$content.outerHeight(true),
-			contentWidth  = data.$content.outerWidth(true) + caretWidth;
+			contentWidth  = data.$content.outerWidth(true);
 
 		// position content
 		if (data.direction === "right" || data.direction === "left") {
 			data.caretPos.top = (contentHeight - caretHeight) / 2;
 			data.contentPos.top = -contentHeight / 2;
 			if (data.direction === "right") {
-				data.contentPos.left = caretWidth + data.margin;
+				data.contentPos.left = data.margin;
 			} else if (data.direction === "left") {
 				data.contentPos.left = -(contentWidth + data.margin);
 			}
