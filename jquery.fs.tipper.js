@@ -1,5 +1,5 @@
 /* 
- * Tipper v3.0.4 - 2014-05-05 
+ * Tipper v3.0.5 - 2014-05-06 
  * A jQuery plugin for simple tooltips. Part of the formstone library. 
  * http://formstone.it/tipper/ 
  * 
@@ -10,20 +10,25 @@
 	"use strict";
 
 	var $body,
-		$tipper;
+		$tipper,
+		pos;
 
 	/**
 	 * @options
+	 * @param delay [int] <0> "Hover delay"
 	 * @param direction [string] <'top'> "Tooltip direction"
 	 * @param follow [boolean] <false> "Flag to follow mouse"
 	 * @param formatter [function] <$.noop> "Text format function"
 	 * @param margin [int] <15> "Tooltip margin"
+	 * @param match [boolean] <false> "Flag to match mouse position"
 	 */
 	var options = {
+		delay: 0,
 		direction: "top",
 		follow: false,
 		formatter: $.noop,
-		margin: 15
+		margin: 15,
+		match: false
 	};
 
 	var pub = {
@@ -62,6 +67,9 @@
 	 */
 	function _init(opts) {
 		options.formatter = _format;
+
+		$body = $("body");
+
 		return $(this).not(".tipper-attached")
 					  .addClass("tipper-attached")
 					  .on("mouseenter.tipper", $.extend({}, options, opts || {}), _build);
@@ -74,11 +82,37 @@
 	 * @param e [object] "Event data"
 	 */
 	function _build(e) {
-		$body = $("body");
-
 		var $target = $(this),
-			data = $.extend(true, {}, e.data, $target.data("tipper-options")),
-			html = '';
+		data = $.extend(true, {}, e.data, $target.data("tipper-options"));
+
+		data.$target = $target;
+		pos = {
+			left: e.pageX,
+			top: e.pageY
+		};
+
+		if (data.delay) {
+			_clearTimer(data.timer);
+
+			data.timer = setTimeout(function() {
+				_doBuild(data.$target, data);
+			}, data.delay);
+		} else {
+			_doBuild(data.$target, data);
+		}
+
+		data.$target.one("mouseleave.tipper", data, _onMouseOut);
+	}
+
+	/**
+	 * @method private
+	 * @name _doBuild
+	 * @description Builds target instance
+	 * @param $target [jQuery object] "Target element"
+	 * @param data [object] "Instance data"
+	 */
+	function _doBuild($target, data) {
+		var html = '';
 
 		html += '<div class="tipper ' + data.direction + '">';
 		html += '<div class="tipper-content">';
@@ -135,6 +169,15 @@
 		if (data.follow) {
 			data.$target.on("mousemove.tipper", data, _onMouseMove)
 						.trigger("mousemove");
+		} else if (data.match) {
+			data.tipperPos.left = pos.left;
+			if (data.direction === "bottom") {
+				data.tipperPos.top = data.offset.top + data.height;
+			} else if (data.direction === "top") {
+				data.tipperPos.top = data.offset.top;
+			}
+
+			data.$tipper.css(data.tipperPos);
 		} else {
 			if (data.direction === "right" || data.direction === "left") {
 				data.tipperPos.top = data.offset.top + (data.height / 2);
@@ -154,9 +197,6 @@
 
 			data.$tipper.css(data.tipperPos);
 		}
-
-		// Bind events
-		data.$target.one("mouseleave.tipper", data, _onMouseOut);
 	}
 
 	/**
@@ -193,6 +233,19 @@
 
 		data.$tipper.remove();
 		data.$target.off("mousemove.tipper mouseleave.tipper");
+	}
+
+	/**
+	 * @method private
+	 * @name _clearTimer
+	 * @description Clears active timer
+	 * @param timer [] "Timer"
+	 */
+	function _clearTimer(timer) {
+		if (timer) {
+			clearTimeout(timer);
+			timer = null;
+		}
 	}
 
 	$.fn.tipper = function(method) {
