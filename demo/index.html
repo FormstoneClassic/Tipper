@@ -66,7 +66,7 @@
 
 				<!-- FOLLOW -->
 				<h2>Follow</h2>
-				<p>You can also configure Tipper to follow the user's mouse:</p>
+				<p>You can configure Tipper to follow the user's mouse:</p>
 
 				<pre class="example"><code class="language-javascript">$(".target").tipper({
 	follow: true
@@ -81,6 +81,40 @@
 				</div>
 
 				<br />
+
+				<!-- MATCH -->
+				<h2>Match</h2>
+				<p>You can configure Tipper to match the user's mouse position relative to the target:</p>
+
+				<pre class="example"><code class="language-javascript">$(".target").tipper({
+	match: true
+});</code></pre>
+
+				<h5>Demo</h5>
+				<div class="clear_fix">
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"left","match":"true"}'>Left</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"right","match":"true"}'>Right</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"top","match":"true"}'>Top</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"bottom","match":"true"}'>Bottom</a>
+				</div>
+
+				<br />
+
+				<!-- DELAY -->
+				<h2>Delay</h2>
+				<p>You can set a delay to avoid accidental tooltips:</p>
+
+				<pre class="example"><code class="language-javascript">$(".target").tipper({
+	delay: 500
+});</code></pre>
+
+				<h5>Demo</h5>
+				<div class="clear_fix">
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"left","delay":"500"}'>Left</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"right","delay":"500"}'>Right</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"top","delay":"500"}'>Top</a>
+					<a href="#" class="button tipped" data-title="Great New Tooltip"  data-tipper-options='{"direction":"bottom","delay":"500"}'>Bottom</a>
+				</div>
 
 			</div>
 		</article>

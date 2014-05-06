@@ -94,6 +94,11 @@
 		}
 
 		data.$target.one("mouseleave.tipper", data, _onMouseOut);
+
+		if (!data.follow && data.match) {
+			data.$target.on("mousemove.tipper", data, _onMouseMove)
+						.trigger("mousemove");
+		}
 	}
 
 	/**
@@ -162,11 +167,20 @@
 			data.$target.on("mousemove.tipper", data, _onMouseMove)
 						.trigger("mousemove");
 		} else if (data.match) {
-			data.tipperPos.left = pos.left;
-			if (data.direction === "bottom") {
-				data.tipperPos.top = data.offset.top + data.height;
-			} else if (data.direction === "top") {
-				data.tipperPos.top = data.offset.top;
+			if (data.direction === "right" || data.direction === "left") {
+				data.tipperPos.top = pos.top;
+				if (data.direction === "right") {
+					data.tipperPos.left = data.offset.left + data.width;
+				} else if (data.direction === "left") {
+					data.tipperPos.left = data.offset.left;
+				}
+			} else {
+				data.tipperPos.left = pos.left;
+				if (data.direction === "bottom") {
+					data.tipperPos.top = data.offset.top + data.height;
+				} else if (data.direction === "top") {
+					data.tipperPos.top = data.offset.top;
+				}
 			}
 
 			data.$tipper.css(data.tipperPos);
@@ -211,7 +225,14 @@
 	function _onMouseMove(e) {
 		var data = e.data;
 
-		data.$tipper.css({ left: e.pageX, top: e.pageY });
+		pos = {
+			left: e.pageX,
+			top: e.pageY
+		};
+
+		if (data.follow && typeof data.$tipper !== "undefined") {
+			data.$tipper.css({ left: pos.left, top: pos.top });
+		}
 	}
 
 	/**
@@ -223,8 +244,12 @@
 	function _onMouseOut(e) {
 		var data = e.data;
 
-		data.$tipper.remove();
-		data.$target.off("mousemove.tipper mouseleave.tipper");
+		_clearTimer(data.timer);
+
+		if (typeof data.$tipper !== "undefined") {
+			data.$tipper.remove();
+			data.$target.off("mousemove.tipper mouseleave.tipper");
+		}
 	}
 
 	/**

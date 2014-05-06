@@ -2,7 +2,7 @@
   "name": "Tipper",
   "id": "tipper",
   "codename": "jquery.fs.tipper",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "A jQuery plugin for simple tooltips. Part of the formstone library.",
   "keywords": [
   	"tooltip",
