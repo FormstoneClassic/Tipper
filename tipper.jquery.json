@@ -1,6 +1,6 @@
 {
   "name": "tipper",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "title": "Tipper",
   "author": {
     "name": "Ben Plum",
@@ -22,12 +22,11 @@
     "ui",
     "javascript",
     "jquery",
-    "formstone",
-    "benplum"
+    "formstone"
   ],
   "docs": "http://formstone.it/tipper/",
   "demo": "http://formstone.it/tipper/",
-  "download": "https://github.com/benplum/Tipper",
-  "bugs": "https://github.com/benplum/Tipper/issues",
+  "download": "https://github.com/Formstone/Tipper",
+  "bugs": "https://github.com/Formstone/Tipper/issues",
   "homepage": "http://formstone.it/tipper/"
 }
