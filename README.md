@@ -7,4 +7,4 @@ A jQuery plugin for simple tooltips. Part of the formstone library.
 - [Documentation](http://formstone.it/tipper/) 
 
 #### Bower Support 
-`bower install Tipper`
+`bower install Tipper` 

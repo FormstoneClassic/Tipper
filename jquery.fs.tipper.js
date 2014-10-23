@@ -1,10 +1,10 @@
 /* 
- * Tipper v3.0.7 - 2014-09-14 
+ * Tipper v3.1.0 - 2014-10-23 
  * A jQuery plugin for simple tooltips. Part of the formstone library. 
  * http://formstone.it/tipper/ 
  * 
  * Copyright 2014 Ben Plum; MIT Licensed 
- */ 
+ */
 
 ;(function ($, window) {
 	"use strict";
@@ -61,27 +61,27 @@
 
 	/**
 	 * @method private
-	 * @name _init
+	 * @name init
 	 * @description Initializes plugin
 	 * @param opts [object] "Initialization options"
 	 */
-	function _init(opts) {
-		options.formatter = _format;
+	function init(opts) {
+		options.formatter = format;
 
 		$body = $("body");
 
 		return $(this).not(".tipper-attached")
 					  .addClass("tipper-attached")
-					  .on("mouseenter.tipper", $.extend({}, options, opts || {}), _build);
+					  .on("mouseenter.tipper", $.extend({}, options, opts || {}), build);
 	}
 
 	/**
 	 * @method private
-	 * @name _build
+	 * @name build
 	 * @description Builds target instance
 	 * @param e [object] "Event data"
 	 */
-	function _build(e) {
+	function build(e) {
 		var $target = $(this),
 		data = $.extend(true, {}, e.data, $target.data("tipper-options"));
 
@@ -92,31 +92,29 @@
 		};
 
 		if (data.delay) {
-			_clearTimer(data.timer);
-
-			data.timer = setTimeout(function() {
-				_doBuild(data.$target, data);
-			}, data.delay);
+			data.timer = startTimer(data.timer, data.delay, function() {
+				doBuild(data.$target, data);
+			});
 		} else {
-			_doBuild(data.$target, data);
+			doBuild(data.$target, data);
 		}
 
-		data.$target.one("mouseleave.tipper", data, _onMouseOut);
+		data.$target.one("mouseleave.tipper", data, onMouseOut);
 
 		if (!data.follow && data.match) {
-			data.$target.on("mousemove.tipper", data, _onMouseMove)
+			data.$target.on("mousemove.tipper", data, onMouseMove)
 						.trigger("mousemove");
 		}
 	}
 
 	/**
 	 * @method private
-	 * @name _doBuild
+	 * @name doBuild
 	 * @description Builds target instance
 	 * @param $target [jQuery object] "Target element"
 	 * @param data [object] "Instance data"
 	 */
-	function _doBuild($target, data) {
+	function doBuild($target, data) {
 		var html = '';
 
 		html += '<div class="tipper ' + data.direction + '">';
@@ -172,7 +170,7 @@
 
 		// Position tipper
 		if (data.follow) {
-			data.$target.on("mousemove.tipper", data, _onMouseMove)
+			data.$target.on("mousemove.tipper", data, onMouseMove)
 						.trigger("mousemove");
 		} else if (data.match) {
 			if (data.direction === "right" || data.direction === "left") {
@@ -211,26 +209,28 @@
 
 			data.$tipper.css(data.tipperPos);
 		}
+
+		data.$tipper.addClass("visible");
 	}
 
 	/**
 	 * @method private
-	 * @name _format
+	 * @name format
 	 * @description Formats tooltip text
 	 * @param $target [jQuery object] "Target element"
 	 * @return [string] "Formatted text"
 	 */
-	function _format($target) {
+	function format($target) {
 		return $target.data("title");
 	}
 
 	/**
 	 * @method private
-	 * @name _onMouseMove
+	 * @name onMouseMove
 	 * @description Handles mousemove event
 	 * @param e [object] "Event data"
 	 */
-	function _onMouseMove(e) {
+	function onMouseMove(e) {
 		var data = e.data;
 
 		pos = {
@@ -245,28 +245,43 @@
 
 	/**
 	 * @method private
-	 * @name _onMouseOut
+	 * @name onMouseOut
 	 * @description Handles mouseout event
 	 * @param e [object] "Event data"
 	 */
-	function _onMouseOut(e) {
+	function onMouseOut(e) {
 		var data = e.data;
 
-		_clearTimer(data.timer);
+		clearTimer(data.timer);
 
 		if (typeof data.$tipper !== "undefined") {
 			data.$tipper.remove();
 			data.$target.off("mousemove.tipper mouseleave.tipper");
+
+			pos = null;
 		}
 	}
 
 	/**
 	 * @method private
-	 * @name _clearTimer
-	 * @description Clears active timer
-	 * @param timer [] "Timer"
+	 * @name startTimer
+	 * @description Starts an internal timer
+	 * @param timer [int] "Timer ID"
+	 * @param time [int] "Time until execution"
+	 * @param callback [int] "Function to execute"
 	 */
-	function _clearTimer(timer) {
+	function startTimer(timer, time, callback) {
+		clearTimer(timer);
+		return setTimeout(callback, time);
+	}
+
+	/**
+	 * @method private
+	 * @name clearTimer
+	 * @description Clears an internal timer
+	 * @param timer [int] "Timer ID"
+	 */
+	function clearTimer(timer) {
 		if (timer) {
 			clearTimeout(timer);
 			timer = null;
@@ -277,7 +292,7 @@
 		if (pub[method]) {
 			return pub[method].apply(this, Array.prototype.slice.call(arguments, 1));
 		} else if (typeof method === 'object' || !method) {
-			return _init.apply(this, arguments);
+			return init.apply(this, arguments);
 		}
 		return this;
 	};
