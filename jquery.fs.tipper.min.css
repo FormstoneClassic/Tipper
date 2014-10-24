@@ -1,5 +1,5 @@
 /* 
- * Tipper v3.1.0 - 2014-10-23 
+ * Tipper v3.1.0 - 2014-10-24 
  * A jQuery plugin for simple tooltips. Part of the formstone library. 
  * http://formstone.it/tipper/ 
  * 
