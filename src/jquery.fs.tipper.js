@@ -71,8 +71,6 @@
 
 		$body = $("body");
 
-		console.log( this.not("[data-" + namespace + "]") );
-
 		return this.filter(function() {
 						return !$(this).data(namespace);
 					})
