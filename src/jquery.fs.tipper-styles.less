@@ -30,13 +30,13 @@
 
 		// .visible
 
-		&.visible {
+		&-visible {
 			opacity: 1;
 		}
 
 		// .tipper-content
 
-		.tipper-content {
+		&-content {
 			background: @tipper-background;
 			border-radius: @tipper-border-radius;
 			color: @tipper-text-color;
@@ -49,12 +49,12 @@
 			white-space: nowrap;
 		}
 
-		// caret
+		// .tipper-caret
 
 		@tipper-caret-width: (@tipper-caret-size * 1.3);
 		@tipper-caret-height: (@tipper-caret-size * 1.3);
 
-		.tipper-caret {
+		&-caret {
 			width: 0;
 			height: 0;
 
@@ -64,7 +64,9 @@
 			position: absolute;
 		}
 
-		&.right {
+		// .tipper-right
+
+		&-right {
 			.tipper-content {
 				box-shadow: @tipper-box-shadow-offset 0 @tipper-box-shadow-blur @tipper-box-shadow-color;
 			}
@@ -79,7 +81,10 @@
 			}
 		}
 
-		&.left {
+
+		// .tipper-left
+
+		&-left {
 			.tipper-content {
 				box-shadow: -@tipper-box-shadow-offset 0 @tipper-box-shadow-blur @tipper-box-shadow-color;
 			}
@@ -94,8 +99,8 @@
 			}
 		}
 
-		&.top,
-		&.bottom {
+		&-top,
+		&-bottom {
 			.tipper-caret {
 				display: block;
 				float: none;
@@ -103,7 +108,9 @@
 			}
 		}
 
-		&.top {
+		// .tipper-top
+
+		&-top {
 			.tipper-content {
 				box-shadow: 0 -@tipper-box-shadow-offset @tipper-box-shadow-blur @tipper-box-shadow-color;
 			}
@@ -118,7 +125,9 @@
 			}
 		}
 
-		&.bottom {
+		// .tipper-bottom
+
+		&-bottom {
 			.tipper-content {
 				box-shadow: 0 @tipper-box-shadow-offset @tipper-box-shadow-blur @tipper-box-shadow-color;
 			}

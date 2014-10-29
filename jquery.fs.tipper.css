@@ -1,10 +1,11 @@
 /* 
- * Tipper v3.1.0 - 2014-10-24 
+ * Tipper v3.1.0 - 2014-10-29 
  * A jQuery plugin for simple tooltips. Part of the formstone library. 
  * http://formstone.it/tipper/ 
  * 
  * Copyright 2014 Ben Plum; MIT Licensed 
  */
+
 
 .tipper {
   width: 1px;
@@ -35,10 +36,10 @@
 .tipper *:after {
   box-sizing: border-box;
 }
-.tipper.visible {
+.tipper-visible {
   opacity: 1;
 }
-.tipper .tipper-content {
+.tipper-content {
   background: #111111;
   border-radius: 3px;
   color: #ffffff;
@@ -50,7 +51,7 @@
   position: relative;
   white-space: nowrap;
 }
-.tipper .tipper-caret {
+.tipper-caret {
   width: 0;
   height: 0;
   content: '';
@@ -58,46 +59,46 @@
   margin: 0;
   position: absolute;
 }
-.tipper.right .tipper-content {
+.tipper-right .tipper-content {
   box-shadow: 1px 0 5px rgba(0, 0, 0, 0.35);
 }
-.tipper.right .tipper-caret {
+.tipper-right .tipper-caret {
   top: 0;
   left: -5px;
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
   border-right: 5px solid #111111;
 }
-.tipper.left .tipper-content {
+.tipper-left .tipper-content {
   box-shadow: -1px 0 5px rgba(0, 0, 0, 0.35);
 }
-.tipper.left .tipper-caret {
+.tipper-left .tipper-caret {
   top: 0;
   right: -5px;
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
   border-left: 5px solid #111111;
 }
-.tipper.top .tipper-caret,
-.tipper.bottom .tipper-caret {
+.tipper-top .tipper-caret,
+.tipper-bottom .tipper-caret {
   display: block;
   float: none;
   margin: 0 auto;
 }
-.tipper.top .tipper-content {
+.tipper-top .tipper-content {
   box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.35);
 }
-.tipper.top .tipper-caret {
+.tipper-top .tipper-caret {
   bottom: -5px;
   left: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 5px solid #111111;
 }
-.tipper.bottom .tipper-content {
+.tipper-bottom .tipper-content {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
 }
-.tipper.bottom .tipper-caret {
+.tipper-bottom .tipper-caret {
   top: -5px;
   left: 0;
   border-left: 5px solid transparent;

@@ -1,5 +1,5 @@
 /* 
- * Tipper v3.1.0 - 2014-10-24 
+ * Tipper v3.1.0 - 2014-10-29 
  * A jQuery plugin for simple tooltips. Part of the formstone library. 
  * http://formstone.it/tipper/ 
  * 
@@ -9,9 +9,18 @@
 ;(function ($, window) {
 	"use strict";
 
-	var $body,
-		$tipper,
-		pos;
+	var namespace        = "tipper",
+		$body            = null,
+		data             = null,
+		// Classes
+		class_base       = namespace,
+		class_content    = namespace + "-content",
+		class_caret      = namespace + "-caret",
+		class_visible    = namespace + "-visible",
+		// Events
+		event_leave      = "mouseleave." + namespace,
+		event_move       = "mousemove." + namespace,
+		event_enter      = "mouseenter." + namespace;
 
 	/**
 	 * @options
@@ -23,12 +32,12 @@
 	 * @param match [boolean] <false> "Flag to match mouse position"
 	 */
 	var options = {
-		delay: 0,
-		direction: "top",
-		follow: false,
-		formatter: $.noop,
-		margin: 15,
-		match: false
+		delay        : 0,
+		direction    : "top",
+		follow       : false,
+		formatter    : $.noop,
+		margin       : 15,
+		match        : false
 	};
 
 	var pub = {
@@ -42,7 +51,7 @@
 		 */
 		defaults: function(opts) {
 			options = $.extend(options, opts || {});
-			return $(this);
+			return this;
 		},
 
 		/**
@@ -52,9 +61,9 @@
 		 * @example $(".target").tipper("destroy");
 		 */
 		destroy: function() {
-			return $(this).trigger("mouseleave.tipper")
-						  .off(".tipper")
-						  .removeClass("tipper-attached");
+			return this.trigger(event_leave)
+					   .off( classify(namespace) )
+					   .removeData(namespace);
 		}
 	};
 
@@ -70,9 +79,13 @@
 
 		$body = $("body");
 
-		return $(this).not(".tipper-attached")
-					  .addClass("tipper-attached")
-					  .on("mouseenter.tipper", $.extend({}, options, opts || {}), build);
+		console.log( this.not("[data-" + namespace + "]") );
+
+		return this.filter(function() {
+						return !$(this).data(namespace);
+					})
+				   .data(namespace, $.extend({}, options, opts || {}))
+				   .on(event_enter, build);
 	}
 
 	/**
@@ -82,28 +95,29 @@
 	 * @param e [object] "Event data"
 	 */
 	function build(e) {
-		var $target = $(this),
-		data = $.extend(true, {}, e.data, $target.data("tipper-options"));
+		var $target = $(e.currentTarget);
 
-		data.$target = $target;
-		pos = {
-			left: e.pageX,
-			top: e.pageY
-		};
+		data = $.extend(true, {
+				$target: $target,
+				left: e.pageX,
+				top: e.pageY
+			},
+			$target.data(namespace) || {},
+			$target.data(namespace + "-options") || {});
 
 		if (data.delay) {
 			data.timer = startTimer(data.timer, data.delay, function() {
-				doBuild(data.$target, data);
+				doBuild($target, data);
 			});
 		} else {
-			doBuild(data.$target, data);
+			doBuild($target, data);
 		}
 
-		data.$target.one("mouseleave.tipper", data, onMouseOut);
+		data.$target.one(event_leave, data, onMouseOut);
 
 		if (!data.follow && data.match) {
-			data.$target.on("mousemove.tipper", data, onMouseMove)
-						.trigger("mousemove");
+			$target.on(event_move, data, onMouseMove)
+				   .trigger(event_move);
 		}
 	}
 
@@ -117,111 +131,111 @@
 	function doBuild($target, data) {
 		var html = '';
 
-		html += '<div class="tipper ' + data.direction + '">';
-		html += '<div class="tipper-content">';
-		html += data.formatter.apply($body, [$target]);
-		html += '<span class="tipper-caret"></span>';
+		html += '<div class="' + [class_base, namespace + "-" + data.direction].join(" ") + '">';
+		html += '<div class="' + class_content + '">';
+		html += data.formatter.call($target, data);
+		html += '<span class="' + class_caret + '"></span>';
 		html += '</div>';
 		html += '</div>';
 
-		data.$target = $target;
 		data.$tipper = $(html);
 
 		$body.append(data.$tipper);
 
-		data.$content = data.$tipper.find(".tipper-content");
-		data.$caret = data.$tipper.find(".tipper-caret");
-		data.offset = $target.offset();
-		data.height = $target.outerHeight();
-		data.width  = $target.outerWidth();
+		data.$content = data.$tipper.find( classify(class_content) );
+		data.$caret   = data.$tipper.find( classify(class_caret) );
+		data.offset   = $target.offset();
+		data.height   = $target.outerHeight();
+		data.width    = $target.outerWidth();
 
-		data.tipperPos = {};
-		data.caretPos = {};
-		data.contentPos = {};
-
-		var caretHeight   = data.$caret.outerHeight(true),
-			caretWidth    = data.$caret.outerWidth(true),
-			contentHeight = data.$content.outerHeight(true),
-			contentWidth  = data.$content.outerWidth(true);
+		var position = {},
+			caretPosition   = {},
+			contentPosition = {},
+			caretHeight     = data.$caret.outerHeight(true),
+			caretWidth      = data.$caret.outerWidth(true),
+			contentHeight   = data.$content.outerHeight(true),
+			contentWidth    = data.$content.outerWidth(true);
 
 		// position content
 		if (data.direction === "right" || data.direction === "left") {
-			data.caretPos.top = (contentHeight - caretHeight) / 2;
-			data.contentPos.top = -contentHeight / 2;
+			caretPosition.top = (contentHeight - caretHeight) / 2;
+			contentPosition.top = -contentHeight / 2;
+
 			if (data.direction === "right") {
-				data.contentPos.left = data.margin;
+				contentPosition.left = data.margin;
 			} else if (data.direction === "left") {
-				data.contentPos.left = -(contentWidth + data.margin);
+				contentPosition.left = -(contentWidth + data.margin);
 			}
 		} else {
-			data.caretPos.left = (contentWidth - caretWidth) / 2;
-			data.contentPos.left = -contentWidth / 2;
+			caretPosition.left = (contentWidth - caretWidth) / 2;
+			contentPosition.left = -contentWidth / 2;
 
 			if (data.direction === "bottom") {
-				data.contentPos.top = data.margin;
+				contentPosition.top = data.margin;
 			} else if (data.direction === "top") {
-				data.contentPos.top = -(contentHeight + data.margin);
+				contentPosition.top = -(contentHeight + data.margin);
 			}
 		}
 
 		// modify dom
-		data.$content.css(data.contentPos);
-		data.$caret.css(data.caretPos);
+		data.$content.css(contentPosition);
+		data.$caret.css(caretPosition);
 
 		// Position tipper
 		if (data.follow) {
-			data.$target.on("mousemove.tipper", data, onMouseMove)
-						.trigger("mousemove");
+			data.$target.on(event_move, data, onMouseMove)
+						.trigger(event_move);
 		} else if (data.match) {
 			if (data.direction === "right" || data.direction === "left") {
-				data.tipperPos.top = pos.top;
+				position.top = data.top; // mouse pos
+
 				if (data.direction === "right") {
-					data.tipperPos.left = data.offset.left + data.width;
+					position.left = data.offset.left + data.width;
 				} else if (data.direction === "left") {
-					data.tipperPos.left = data.offset.left;
+					position.left = data.offset.left;
 				}
 			} else {
-				data.tipperPos.left = pos.left;
+				position.left = data.left; // mouse pos
+
 				if (data.direction === "bottom") {
-					data.tipperPos.top = data.offset.top + data.height;
+					position.top = data.offset.top + data.height;
 				} else if (data.direction === "top") {
-					data.tipperPos.top = data.offset.top;
+					position.top = data.offset.top;
 				}
 			}
-
-			data.$tipper.css(data.tipperPos);
 		} else {
 			if (data.direction === "right" || data.direction === "left") {
-				data.tipperPos.top = data.offset.top + (data.height / 2);
+				position.top = data.offset.top + (data.height / 2);
+
 				if (data.direction === "right") {
-					data.tipperPos.left = data.offset.left + data.width;
+					position.left = data.offset.left + data.width;
 				} else if (data.direction === "left") {
-					data.tipperPos.left = data.offset.left;
+					position.left = data.offset.left;
 				}
 			} else {
-				data.tipperPos.left = data.offset.left + (data.width / 2);
+				position.left = data.offset.left + (data.width / 2);
+
 				if (data.direction === "bottom") {
-					data.tipperPos.top = data.offset.top + data.height;
+					position.top = data.offset.top + data.height;
 				} else if (data.direction === "top") {
-					data.tipperPos.top = data.offset.top;
+					position.top = data.offset.top;
 				}
 			}
-
-			data.$tipper.css(data.tipperPos);
 		}
 
-		data.$tipper.addClass("visible");
+		data.$tipper.css(position)
+					.addClass(class_visible);
 	}
 
 	/**
 	 * @method private
 	 * @name format
 	 * @description Formats tooltip text
-	 * @param $target [jQuery object] "Target element"
+	 * @param data [object] "Data object"
 	 * @return [string] "Formatted text"
 	 */
-	function format($target) {
-		return $target.data("title");
+	function format(data) {
+		return this.data("title");
 	}
 
 	/**
@@ -231,15 +245,14 @@
 	 * @param e [object] "Event data"
 	 */
 	function onMouseMove(e) {
-		var data = e.data;
-
-		pos = {
-			left: e.pageX,
-			top: e.pageY
-		};
+		var data = e.data,
+			position = {
+				left: e.pageX,
+				top: e.pageY
+			};
 
 		if (data.follow && typeof data.$tipper !== "undefined") {
-			data.$tipper.css({ left: pos.left, top: pos.top });
+			data.$tipper.css(position);
 		}
 	}
 
@@ -256,9 +269,9 @@
 
 		if (typeof data.$tipper !== "undefined") {
 			data.$tipper.remove();
-			data.$target.off("mousemove.tipper mouseleave.tipper");
+			data.$target.off( [event_move, event_leave].join(" ") );
 
-			pos = null;
+			data = null;
 		}
 	}
 
@@ -288,7 +301,18 @@
 		}
 	}
 
-	$.fn.tipper = function(method) {
+	/**
+	 * @method private
+	 * @name classify
+	 * @description Create class selector from text
+	 * @param text [string] "Text to convert"
+	 * @return [string] "New class name"
+	 */
+	function classify(text) {
+		return "." + text;
+	}
+
+	$.fn[namespace] = function(method) {
 		if (pub[method]) {
 			return pub[method].apply(this, Array.prototype.slice.call(arguments, 1));
 		} else if (typeof method === 'object' || !method) {
@@ -297,7 +321,7 @@
 		return this;
 	};
 
-	$.tipper = function(method) {
+	$[namespace] = function(method) {
 		if (method === "defaults") {
 			pub.defaults.apply(this, Array.prototype.slice.call(arguments, 1));
 		}
