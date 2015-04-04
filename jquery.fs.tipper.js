@@ -1,9 +1,9 @@
 /* 
- * Tipper v3.1.0 - 2014-10-29 
+ * Tipper v3.1.0 - 2015-04-04 
  * A jQuery plugin for simple tooltips. Part of the formstone library. 
- * http://formstone.it/tipper/ 
+ * http://classic.formstone.it/tipper/ 
  * 
- * Copyright 2014 Ben Plum; MIT Licensed 
+ * Copyright 2015 Ben Plum; MIT Licensed 
  */
 
 ;(function ($, window) {
@@ -51,7 +51,8 @@
 		 */
 		defaults: function(opts) {
 			options = $.extend(options, opts || {});
-			return this;
+
+			return (typeof this === 'object') ? $(this) : true;
 		},
 
 		/**
@@ -78,8 +79,6 @@
 		options.formatter = format;
 
 		$body = $("body");
-
-		console.log( this.not("[data-" + namespace + "]") );
 
 		return this.filter(function() {
 						return !$(this).data(namespace);

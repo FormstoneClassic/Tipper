@@ -13,10 +13,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Formstone/Tipper"
+    "url": "https://github.com/FormstoneClassic/Tipper"
   },
-  "homepage": "http://formstone.it/tipper/",
-  "demo": "http://formstone.it/components/Tipper/demo/index.html",
+  "homepage": "http://classic.formstone.it/tipper/",
+  "demo": "http://classic.formstone.it/components/Tipper/demo/index.html",
   "license": "MIT",
   "author": {
     "name": "Ben Plum",

@@ -8,7 +8,7 @@
     "url": "http://www.benplum.com"
   },
   "license": "MIT",
-  "homepage": "http://formstone.it/tipper/",
+  "homepage": "http://classic.formstone.it/tipper/",
   "main": [
     "jquery.fs.tipper.js",
     "jquery.fs.tipper.css"

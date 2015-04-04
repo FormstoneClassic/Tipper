@@ -24,9 +24,9 @@
     "jquery",
     "formstone"
   ],
-  "docs": "http://formstone.it/tipper/",
-  "demo": "http://formstone.it/tipper/",
-  "download": "https://github.com/Formstone/Tipper",
-  "bugs": "https://github.com/Formstone/Tipper/issues",
-  "homepage": "http://formstone.it/tipper/"
+  "docs": "http://classic.formstone.it/tipper/",
+  "demo": "http://classic.formstone.it/tipper/",
+  "download": "https://github.com/FormstoneClassic/Tipper",
+  "bugs": "https://github.com/FormstoneClassic/Tipper/issues",
+  "homepage": "http://classic.formstone.it/tipper/"
 }
